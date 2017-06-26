@@ -3,11 +3,9 @@ package com.guwr.zookeeper;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.ChildData;
+import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import org.apache.curator.retry.RetryNTimes;
-import org.apache.zookeeper.data.Stat;
-
-import java.util.List;
 
 /**
  * Created by guwr
@@ -19,11 +17,15 @@ import java.util.List;
  */
 public class CuratorWatcherTest {
 
-    /** Zookeeper info */
-    private static final String ZK_ADDRESS = "127.0.0.1:2181";
+    /**
+     * Zookeeper info
+     */
+//    private static final String ZK_ADDRESS = "127.0.0.1:2181";
+    private static final String ZK_ADDRESS = "192.168.1.115:2181";
     private static final String ZK_PATH = "/zktest";
+    private static final String CHARSET = "UTF-8";
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         System.out.println("main");
 
         // 1.Connect to zk
@@ -31,7 +33,7 @@ public class CuratorWatcherTest {
         client.start();
         System.out.println("zk client start successfully!");
 
-        // 2.Register watcher
+//         2.Register watcher
         PathChildrenCache watcher = new PathChildrenCache(client, ZK_PATH, true);
 
         watcher.getListenable().addListener((client1, event) -> {
@@ -50,6 +52,20 @@ public class CuratorWatcherTest {
         watcher.start(PathChildrenCache.StartMode.BUILD_INITIAL_CACHE);
         System.out.println("Register zk watcher successfully!");
 
+
+        NodeCache nodeCache = new NodeCache(client, ZK_PATH);
+
+        nodeCache.getListenable().addListener(() -> {
+            System.out.println("================== catch node data change ==================");
+            ChildData childData = nodeCache.getCurrentData();
+            if (childData == null) {
+                System.out.println("===delete, path=" + ZK_PATH + ", childData=" + childData);
+            } else {
+                System.out.println("===update or add, path=" + ZK_PATH + ", childData=" + new String(childData.getData(), CHARSET));
+            }
+        });
+        nodeCache.start();
+        System.out.println("nodeCache  successfully!");
         Thread.sleep(Integer.MAX_VALUE);
     }
 }

@@ -17,11 +17,14 @@ import java.util.List;
  */
 public class CuratorClientTest {
 
-    /** Zookeeper info */
-    private static final String ZK_ADDRESS = "127.0.0.1:2181";
+    /**
+     * Zookeeper info
+     */
+//    private static final String ZK_ADDRESS = "127.0.0.1:2181";
+    private static final String ZK_ADDRESS = "192.168.1.115:2181";
     private static final String ZK_PATH = "/zktest";
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         System.out.println("main");
 
         // 1.Connect to zk
@@ -49,7 +52,7 @@ public class CuratorClientTest {
 
         System.out.println("String = " + new String(bytes1));
 
-          client.delete().forPath(ZK_PATH);
+        client.delete().forPath(ZK_PATH);
         strings = client.getChildren().forPath("/");
 
         System.out.println("strings = " + strings);
