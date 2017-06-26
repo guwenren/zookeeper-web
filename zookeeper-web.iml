@@ -35,9 +35,9 @@
     <orderEntry type="library" name="Maven: jline:jline:0.9.94" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.7.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.curator:curator-recipes:2.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:2.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.curator:curator-client:2.7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-recipes:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:2.11.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-client:2.11.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:16.0.1" level="project" />
   </component>
 </module>

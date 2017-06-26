@@ -5,6 +5,7 @@ import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
+import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.retry.RetryNTimes;
 
 /**
@@ -66,6 +67,25 @@ public class CuratorWatcherTest {
         });
         nodeCache.start();
         System.out.println("nodeCache  successfully!");
+
+
+        TreeCache treeCache = new TreeCache(client, ZK_PATH);
+
+        treeCache.getListenable().addListener((client12, event) -> {
+            ChildData data = event.getData();
+            if (data == null) {
+                System.out.println("treeCache No data in event[" + event + "]");
+            } else {
+                System.out.println("treeCache Receive event: "
+                        + "type=[" + event.getType() + "]"
+                        + ", path=[" + data.getPath() + "]"
+                        + ", data=[" + new String(data.getData()) + "]"
+                        + ", stat=[" + data.getStat() + "]");
+            }
+        });
+        treeCache.start();
+        System.out.println("treeCache  successfully!");
+
         Thread.sleep(Integer.MAX_VALUE);
     }
 }
